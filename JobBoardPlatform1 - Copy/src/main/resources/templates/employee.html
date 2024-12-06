@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7fc;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .welcome-message {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .job-listings, .application-status {
+            margin-top: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .job-listings h2, .application-status h2 {
+            color: #007bff;
+        }
+        .job-item, .application-item {
+            margin: 10px 0;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .logout-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Welcome Message -->
+    <div class="welcome-message">
+        <p th:text="'Welcome, ' + ${employee.name} + '!'"></p> <!-- Display employee's name -->
+    </div>
+
+    <!-- Job Application Status Section -->
+    <div class="application-status">
+        <h2>Job Application Status</h2>
+        <p>Here is the status of your job applications:</p>
+        <ul>
+            <li th:each="application : ${applications}">
+                <div class="application-item">
+                    <strong th:text="${application.jobTitle}">Job Title</strong> -
+                    <span th:text="${application.status}">Status</span> <!-- e.g., "Under Review" -->
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Job Listings (If Employee Can Apply or Recommend) -->
+    <div class="job-listings">
+        <h2>Available Job Listings</h2>
+        <p>Browse and apply for new positions within the company:</p>
+        <ul>
+            <li th:each="job : ${jobListings}">
+                <div class="job-item">
+                    <strong th:text="${job.title}">Job Title</strong> -
+                    <span th:text="${job.department}">Department</span> -
+                    <a th:href="@{/jobs/{id}(id=${job.id})}" class="btn">View Job</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Logout Button -->
+    <p><a th:href="@{/logout}" class="logout-btn">Logout</a></p>
+</div>
+
+</body>
+</html>
